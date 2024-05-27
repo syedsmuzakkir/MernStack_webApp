@@ -1,6 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './styles.css';
+
+
 
 const ProductForm = () => {
 
@@ -9,6 +12,7 @@ const ProductForm = () => {
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
   const [video, setVideo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,11 +46,16 @@ const ProductForm = () => {
   
 
   async function fetchData() {
+    
     try {
+        setIsLoading(true);
       const response = await axios.get('https://mern-backened-ojlq.onrender.com/products');
       console.log('Data:', response.data);
       setData(response.data)
+      setIsLoading(false);
+
       return response.data; // Return the data if needed
+
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error; // Throw the error if needed
@@ -181,9 +190,76 @@ const ProductForm = () => {
 </form>
 
 
+<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        { isLoading ? (
+  Array.from({ length: 6 }).map((_, index) => (
+    <div
+      key={index}
+      className="loading-card"
+      style={{
+        width: '300px',
+        margin: '20px',
+        padding: '20px',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        height: '300px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div className="shimmer-wrapper">
+        <div className="shimmer-content"></div>
+      </div>
+    </div>
+  ))
+) : (
+          Data?.map((product, index) => (
+            <div
+              key={index}
+              style={{
+                width: '300px',
+                margin: '20px',
+                padding: '20px',
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                position: 'relative',
+              }}
+            >
+              {/* Product card content */}
+              
+            <img
+              src={product.thumbnailUrl}
+              alt={product.title}
+              style={{
+                width: '100%',
+                height: '200px',
+                objectFit: 'cover',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.opacity = '0.5';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.opacity = '1';
+              }}
+              onClick={() => {
+                window.open(product.videoUrl, '_blank');
+              }}
+            />
+            <h3 style={{ marginTop: '10px' }}>{product.title}</h3>
+            <p style={{ marginTop: '10px' }}>{product.description}</p>
+          </div>
+            
+          ))
+        )}
+      </div>
+
    
 
-<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+{/* <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {Data?.map((product, index) => (
           <div
             key={index}
@@ -220,7 +296,7 @@ const ProductForm = () => {
             <p style={{ marginTop: '10px' }}>{product.description}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </>
   );
 };
