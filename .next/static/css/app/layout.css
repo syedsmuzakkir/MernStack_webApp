@@ -1701,6 +1701,9 @@ html {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.absolute {
+  position: absolute;
+}
 .relative {
   position: relative;
 }
@@ -1715,6 +1718,9 @@ html {
 }
 .flex {
   display: flex;
+}
+.hidden {
+  display: none;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -1764,9 +1770,6 @@ html {
 }
 .p-2 {
   padding: 0.5rem;
-}
-.p-24 {
-  padding: 6rem;
 }
 .text-xl {
   font-size: 1.25rem;

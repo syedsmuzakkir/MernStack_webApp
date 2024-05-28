@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './styles.css';
+import './styles.css'
 
 
 
@@ -188,6 +188,7 @@ const ProductForm = () => {
 
   <button type="submit" style={buttonStyles}>UPLOAd</button>
 </form>
+
 
 
 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
