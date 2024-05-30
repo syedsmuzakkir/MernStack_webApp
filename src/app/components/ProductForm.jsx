@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './styles.css'
+import Playbutton from '../../../public/PlayButton.png';
+import Image from 'next/image';
 
 
 
@@ -13,6 +15,7 @@ const ProductForm = () => {
   const [thumbnail, setThumbnail] = useState(null);
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [PlayVideo, SetPlayVideo] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -137,8 +140,11 @@ const ProductForm = () => {
   
   return (
     <>
-    
+  
 <form onSubmit={handleSubmit} style={formStyles}>
+<div >
+     <h2 className='text-center font-bold text-blue-700 pb-3 capitalize'>Upload The Form  Details here</h2>
+    </div>
   <div style={inputContainer}>
     <label htmlFor="title" style={labelStyles}>Title:</label>
     <input
@@ -186,12 +192,15 @@ const ProductForm = () => {
     />
   </div>
 
-  <button type="submit" style={buttonStyles}>UPLOAd</button>
+  <button type="submit" className='capitalize' style={buttonStyles}>UPLOAd</button>
 </form>
 
 
 
+
+<h3 className='text-3xl text-blue-400 font-bold capitalize'>All the uploaded form details   </h3>
 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+  
         { isLoading ? (
   Array.from({ length: 6 }).map((_, index) => (
     <div
@@ -216,6 +225,8 @@ const ProductForm = () => {
     </div>
   ))
 ) : (
+          
+
           Data?.map((product, index) => (
             <div
               key={index}
@@ -229,75 +240,52 @@ const ProductForm = () => {
                 position: 'relative',
               }}
             >
-              {/* Product card content */}
-              
-            <img
-              src={product.thumbnailUrl}
-              alt={product.title}
-              style={{
-                width: '100%',
-                height: '200px',
-                objectFit: 'cover',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.opacity = '0.5';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.opacity = '1';
-              }}
-              onClick={() => {
-                window.open(product.videoUrl, '_blank');
-              }}
-            />
-            <h3 style={{ marginTop: '10px' }}>{product.title}</h3>
-            <p style={{ marginTop: '10px' }}>{product.description}</p>
-          </div>
-            
+              <div
+                style={{
+                  position: 'relative',
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  // Play the video within the same page
+                  // You'll need to implement the video player logic here
+                  window.open(product.videoUrl, '_blank');
+                  
+                }}
+              >
+                <img
+                  src={product.thumbnailUrl}
+                  alt={product.title}
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover',
+                    opacity: '1',
+                  }}
+                />
+                <Image
+                  src={Playbutton}
+                  alt="Play Button"
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '900px',
+                    height: '90px',
+                  }}
+                />
+              </div>
+              <h3 style={{ marginTop: '10px' }}>{product.title}</h3>
+              <p style={{ marginTop: '10px' }}>{product.description}</p>
+            </div>
           ))
-        )}
+          
+        )
+        }
       </div>
 
    
 
-{/* <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {Data?.map((product, index) => (
-          <div
-            key={index}
-            style={{
-              width: '300px',
-              margin: '20px',
-              padding: '20px',
-              border: '1px solid #ccc',
-              borderRadius: '5px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              position: 'relative',
-            }}
-          >
-            <img
-              src={product.thumbnailUrl}
-              alt={product.title}
-              style={{
-                width: '100%',
-                height: '200px',
-                objectFit: 'cover',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.opacity = '0.5';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.opacity = '1';
-              }}
-              onClick={() => {
-                window.open(product.videoUrl, '_blank');
-              }}
-            />
-            <h3 style={{ marginTop: '10px' }}>{product.title}</h3>
-            <p style={{ marginTop: '10px' }}>{product.description}</p>
-          </div>
-        ))}
-      </div> */}
     </>
   );
 };
