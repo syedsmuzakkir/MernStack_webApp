@@ -198,7 +198,7 @@ const ProductForm = () => {
 
 
 
-<h3 className='text-3xl text-blue-400 font-bold capitalize'>All the uploaded form details   </h3>
+<h3 className='text-3xl text-blue-400 font-bold capitalize text-center'>All the uploaded form details   </h3>
 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
   
         { isLoading ? (
