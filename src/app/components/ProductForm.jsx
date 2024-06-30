@@ -48,6 +48,22 @@ const ProductForm = () => {
   };
   
 
+  function fetchData1() {
+    fetch('https://mern-backened-ojlq.onrender.com/keepalive')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        // Process the fetched data as needed
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+  
+  // Fetch data every minute
+  setInterval(fetchData1, 60000); // 60000 milliseconds = 1 minute
+
+
   async function fetchData() {
     
     try {
@@ -71,6 +87,7 @@ const ProductForm = () => {
   }, []);
 
 
+  
 
   // styles 
   const formStyles = {
